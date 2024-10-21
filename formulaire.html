@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire Nom et Prénom</title>
+</head>
+<body>
+  <h1>Formulaire Nom et Prénom</h1>
+
+  <form id="form-csv" onsubmit="generateCSV(); return false;">
+    <label for="nom">Nom :</label>
+    <input type="text" id="nom" required><br><br>
+
+    <label for="prenom">Prénom :</label>
+    <input type="text" id="prenom" required><br><br>
+
+    <button type="submit">Enregistrer</button>
+  </form>
+
+  <script>
+    function generateCSV() {
+      const nom = document.getElementById('nom').value;
+      const prenom = document.getElementById('prenom').value;
+
+      const csvContent = "Nom,Prénom\n" + nom + "," + prenom;
+
+      // Créer un Blob pour le CSV
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+      // Créer un lien de téléchargement
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", "donnees.csv");
+      document.body.appendChild(link);
+
+      link.click(); // Simuler le clic pour télécharger le fichier
+      document.body.removeChild(link); // Supprimer le lien après téléchargement
+    }
+  </script>
+</body>
+</html>
